@@ -34,3 +34,16 @@ console.log(num2 / num1) // Division
     }
     let result = add(5,10);
     console.log("Addition is: " + result);
+
+    const admin = {
+        username: "admin",
+        password: "1234"
+    }
+
+    function login(user,pass){
+        if(user === admin.username && pass === admin.password){
+            return "Login Successful";
+        } else {
+            return "Invalid Username or Password";
+        }
+    }
