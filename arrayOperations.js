@@ -35,8 +35,31 @@ let numbers = [1, 2, 3, 4, 5];
 // let reversedArray = numbers.slice().reverse();
 // console.log("Reversed Array:", reversedArray); // Output: [5, 4, 3, 2, 1]
 
-console.log("Original Array:", numbers); // Output: [1, 2, 3, 4, 5]
+// console.log("Original Array:", numbers); // Output: [1, 2, 3, 4, 5]
 
-numbers.map((value,index) => {
-    console.log(`Value ${value} at index ${index}`)
-})
+// let result = numbers.map((value,index) => value * 2);
+// console.log("Mapped Array (Doubled Values):", result); // Output: [2, 4, 6, 8, 10]
+
+// let filteredArray = numbers.filter((value) => value % 2 === 0);
+// console.log("Filtered Array (Even Numbers):", filteredArray); // Output: [2, 4]
+
+// sample json in a variable
+// let data = [
+//   { "_id": 2, "quantity": 5, "price": 25, "targetPrice": 100 },
+//   { "_id": 1, "quantity": 10, "price": 15, "targetPrice": 120 },
+//   { "_id": 3, "quantity": 6, "price": 35, "targetPrice": 100 },
+//   { "_id": 4, "quantity": 5, "price": 55, "targetPrice": 150 },
+//   { "_id": 5, "quantity": 5, "price": 55, "targetPrice": 150 }
+// ]
+
+
+// let sorteddata = data.filter((item) => {
+//      if(item.price < 50 && item.quantity > 5 && item.targetPrice > 50) 
+//         return item
+    
+// })
+// console.log(sorteddata)
+
+
+
+
