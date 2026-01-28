@@ -4,6 +4,19 @@
     "name": "john_doe",
     "email": "john@example.com",
     "password": "password123",
-    "todo": []
+    "todo": [
+      {
+        "id": "2026-01-28T09:52:45.914Z",
+        "createdAt": "2026-01-28T09:52:45.914Z",
+        "task": "Complete the project documentation",
+        "status": false
+      },
+      {
+        "id": "2026-01-28T09:53:08.684Z",
+        "createdAt": "2026-01-28T09:53:08.684Z",
+        "task": "Drink water daily",
+        "status": false
+      }
+    ]
   }
 ]
