@@ -1,15 +1,20 @@
 import fs from "fs";
-
+import {
+	ReasonPhrases,
+	StatusCodes,
+	getReasonPhrase,
+	getStatusCode,
+} from 'http-status-codes';
 function login(req, res) {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).send("Email and password are required");
+      return res.status(StatusCodes.BAD_REQUEST)
     }
-
+  
     if (!fs.existsSync("user.json")) {
-      return res.status(404).send("No users found");
+      return res.status(StatusCodes.NOT_FOUND)
     }
     const users = JSON.parse(fs.readFileSync("user.json", "utf-8"));
 
@@ -18,14 +23,14 @@ function login(req, res) {
     );
 
     if (!isUser) {
-      return res.status(401).send("Email or password is wrong");
+      return res.status(StatusCodes.BAD_REQUEST)
     }
 
-    res.status(200).send("Login successful");
+    res.status(StatusCodes.OK)
 
   } catch (error) {
     console.error(error);
-    res.status(500).send("Server error");
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR)
   }
 }
 
