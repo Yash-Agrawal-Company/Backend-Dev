@@ -1,18 +1,29 @@
 import fs from "fs";
-
+import {
+StatusCodes
+} from 'http-status-pro-js';
+import bcrypt, { hashSync } from "bcrypt";
 function saveUser(req) {
   try {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-      return res.status(400).send("All fields are required");
+      return res.status(StatusCodes.NON_AUTHORITATIVE_INFORMATION.code).json({
+        code : StatusCodes.NON_AUTHORITATIVE_INFORMATION.code,
+        message : StatusCodes.NON_AUTHORITATIVE_INFORMATION.message,
+        data : null
+      })
     }
     let users = [];
+
+    let salt = bcrypt.genSaltSync(10);
+    let hpassword = hashSync(password, salt);
+
     const ob = {
       id: Date.now(),
       name,
       email,
-      password,
+      password : hpassword,
     };
 
     if (fs.existsSync("user.json")) {
@@ -21,14 +32,14 @@ function saveUser(req) {
 
       const isUser = users.find((u) => u.email === email);
       if (isUser) {
-        return res.status(409).send("User already exists");
+        return res.status(StatusCodes.CONFLICT)
       }
     }
 
     users.push(ob);
     fs.writeFileSync("user.json", JSON.stringify(users, null, 2));
-
-    return ob;
+    
+    return 
   } catch (error) {
     console.log(error);
   }

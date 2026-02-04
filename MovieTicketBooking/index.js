@@ -2,26 +2,31 @@ import express from "express";
 import mid from "./mid.js";
 import saveUser from "./res.js";
 import login from "./login.js";
+import usermidd3 from "./midd3.js";
 const app = express();
 const port = 3000;
+
 import {
-	ReasonPhrases,
-	StatusCodes,
-	getReasonPhrase,
-	getStatusCode,
-} from 'http-status-codes';
+StatusCodes
+} from 'http-status-pro-js';
 import cors from "cors";
 app.use(express.json());
 app.use(cors());
-app.post("/signup", mid, (req, res, next) => {
+app.post("/signup", usermidd3, (req, res) => {
   try {
     const result = saveUser(req);
 
     if (result === "exists") {
-      return res.status(StatusCodes.CONFLICT)
+      return res.status(StatusCodes.CONFLICT.code)
     }
-
-    return res.status(StatusCodes.CREATED)
+    //   console.log("This is the code of package of http codes"+res.StatusCodes.code)
+    //  console.log("This is the message of package of http codes"+res.StatusCodes.message)
+    return  res.status(StatusCodes.CREATED.code).json({
+      code : StatusCodes.CREATED.code,
+      message : StatusCodes.CREATED.message,
+      data : null,
+    })
+    
   } catch (err) {
     next(err);
   }
