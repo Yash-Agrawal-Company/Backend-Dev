@@ -1,9 +1,9 @@
 import fs from 'fs';
 
-export function createUser(name, email,password){
+export function createUser(name , email , password){
     let employees = []
     let objUser = {
-        id : Date.now(), name , email, password
+        id : Date.now(), name , email , password
     }
     if(fs.existsSync('employees.json')) {
         let data = JSON.parse(fs.readFileSync('employees.json', 'utf-8'));
@@ -15,7 +15,9 @@ export function createUser(name, email,password){
     
     employees.push(objUser);
     fs.writeFileSync('employees.json', JSON.stringify(employees, null, 2));
+
     console.log("User created successfully")
+    return objUser;
 }
 
 export function updateUser(id,name,email,password){

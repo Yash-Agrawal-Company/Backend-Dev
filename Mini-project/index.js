@@ -1,32 +1,26 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { createUser } from './src/model/user.js';
+import signupMidd from './src/Midd/SignupMidd.js';
+import userSignupService from './src/service/signupService.js';
+import { createUser } from './src/model/user.model.js';
 import { StatusCodes } from 'http-status-pro-js';
 dotenv.config();
 const app = express();
 const port = process.env.PORT
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.render('index.ejs');
 });
 
-app.post('/data', (req, res) => {
-   const {name,email,password} = req.body;
-   if(!name || !email || !password){
-     return res.status(StatusCodes.BAD_REQUEST.code).json({
-        code : StatusCodes.BAD_REQUEST.code,
-        message : StatusCodes.BAD_REQUEST.message,
-        data : null
-     })
-   }    
-   createUser(name,email,password);
-    res.status(StatusCodes.CREATED.code).json({
-        code : StatusCodes.CREATED.code,
-        message : StatusCodes.CREATED.message,
-        data : null
-     })
+app.get('/signup', (req, res) => {
+  res.render('signup.ejs');
 });
+
+app.post('/signup', signupMidd, userSignupService);
+  
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`);
