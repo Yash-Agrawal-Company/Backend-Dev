@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use((req, res, next) => {
@@ -33,6 +34,10 @@ app.get("/contact", (req, res) => {
 app.post("/contact", (req, res) => {
     console.log(req.body);
     res.send("Form submitted successfully!");
+});
+app.get("/gallery", (req, res) => {
+    const images = ["img1.jpg", "img2.jpg", "img3.jpg"];
+    res.render("gallery", { images });
 });
 app.get("/users", (req, res) => {
     const { name } = req.query;
