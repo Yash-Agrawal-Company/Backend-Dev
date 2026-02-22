@@ -1,5 +1,5 @@
 import express from "express";
-
+import { validateYear } from "./midd.js";
 const app = express();
 const PORT = 3000;
 let books = [
@@ -13,7 +13,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
     res.send("Books API Running...");
 });
-app.get("/books", (req, res) => {
+app.get("/books", validateYear, (req, res) => {
     let result = books;
 
     const { author, year } = req.query;
