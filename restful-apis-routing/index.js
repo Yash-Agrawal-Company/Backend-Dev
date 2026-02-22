@@ -103,6 +103,22 @@ app.get("/books", validateYear, (req, res) => {
         data: paginatedResult
     });
 });
+app.get("/books/search", (req, res) => {
+    const { title } = req.query;
+
+    if (!title) {
+        return res.status(400).json({ error: "Search title is required" });
+    }
+
+    const results = books.filter(book =>
+        book.title.toLowerCase().includes(title.toLowerCase())
+    );
+
+    res.json({
+        total: results.length,
+        results
+    });
+});
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
