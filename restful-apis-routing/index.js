@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 app.get("/books", validateYear, (req, res) => {
     let result = books;
 
-    const { author, year } = req.query;
+    const { author, year, page = 1, limit = 5 } = req.query;
 
     if (author) {
         result = result.filter(book =>
@@ -30,7 +30,20 @@ app.get("/books", validateYear, (req, res) => {
         );
     }
 
-    res.json(result);
+    const pageNum = Number(page);
+    const limitNum = Number(limit);
+
+    const startIndex = (pageNum - 1) * limitNum;
+    const endIndex = startIndex + limitNum;
+
+    const paginatedResult = result.slice(startIndex, endIndex);
+
+    res.json({
+        total: result.length,
+        page: pageNum,
+        limit: limitNum,
+        data: paginatedResult
+    });
 });
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
