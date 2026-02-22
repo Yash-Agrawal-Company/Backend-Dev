@@ -7,7 +7,16 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 app.use(express.json());
+app.use((req, res, next) => {
+    const start = Date.now();
 
+    res.on("finish", () => {
+        const duration = Date.now() - start;
+        console.log(`${req.method} ${req.url} - ${duration}ms`);
+    });
+
+    next();
+});
 const port = 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
