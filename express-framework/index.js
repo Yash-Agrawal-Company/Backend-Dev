@@ -12,6 +12,27 @@ const port = 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+const users = [
+    { id: 1, name: "Yash" },
+    { id: 2, name: "Amit" },
+    { id: 3, name: "Rahul" },
+    { id: 4, name: "Riya" }
+];
+
+app.get("/users", (req, res) => {
+    const { name } = req.query;
+
+    let filteredUsers = users;
+
+    if (name) {
+        filteredUsers = users.filter(user =>
+            user.name.toLowerCase().includes(name.toLowerCase())
+        );
+    }
+
+    res.render("users", { users: filteredUsers });
+});
+
 app.get("/", (req, res) => {
     res.render("home");
 });
