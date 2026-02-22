@@ -28,6 +28,31 @@ const users = [
     { id: 3, name: "Rahul" },
     { id: 4, name: "Riya" }
 ];
+let posts = [
+    { id: 1, title: "First Post", content: "Welcome to my blog" },
+    { id: 2, title: "Node.js", content: "Learning Node is fun" }
+];
+app.get("/blog", (req, res) => {
+    res.render("blog", { posts });
+});
+app.get("/blog/:id", (req, res) => {
+    const post = posts.find(p => p.id == req.params.id);
+    res.render("post", { post });
+});
+app.get("/new-post", (req, res) => {
+    res.render("newPost");
+});
+app.post("/new-post", (req, res) => {
+    const { title, content } = req.body;
+
+    posts.push({
+        id: posts.length + 1,
+        title,
+        content
+    });
+
+    res.redirect("/blog");
+});
 app.get("/contact", (req, res) => {
     res.render("contact");
 });
