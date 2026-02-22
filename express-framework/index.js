@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
-
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use((req, res, next) => {
     const start = Date.now();
@@ -27,7 +27,13 @@ const users = [
     { id: 3, name: "Rahul" },
     { id: 4, name: "Riya" }
 ];
-
+app.get("/contact", (req, res) => {
+    res.render("contact");
+});
+app.post("/contact", (req, res) => {
+    console.log(req.body);
+    res.send("Form submitted successfully!");
+});
 app.get("/users", (req, res) => {
     const { name } = req.query;
 
