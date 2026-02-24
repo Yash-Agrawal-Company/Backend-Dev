@@ -1,0 +1,28 @@
+<h2>Employee Payroll System</h2>
+<a href="/add">Add Employee</a>
+
+<table border="1">
+<tr>
+<th>Name</th>
+<th>Dept</th>
+<th>Salary</th>
+<th>Tax (12%)</th>
+<th>Net</th>
+<th>Action</th>
+</tr>
+
+<% employees.forEach(e => { %>
+<tr>
+<td><%= e.name %></td>
+<td><%= e.department %></td>
+<td><%= e.salary %></td>
+<td><%= e.salary * 0.12 %></td>
+<td><%= e.salary - (e.salary * 0.12) %></td>
+<td>
+<a href="/edit/<%= e.id %>">Edit</a>
+<a href="/delete/<%= e.id %>">Delete</a>
+</td>
+</tr>
+<% }) %>
+
+</table>
