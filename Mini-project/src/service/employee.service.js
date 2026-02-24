@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import {StatusCodes} from "http-status-pro-js"
 
-import { createUser } from "../model/user.model.js";
+import { createUser } from "../models/user.model.js";
 
 
 function userSignupService( req, res){

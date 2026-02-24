@@ -1,8 +1,8 @@
 [
   {
-    "id": 1771580787129,
-    "name": "yash",
-    "email": "yash@gmail.com",
-    "password": "$2b$10$4W6ssg8kUumak4DnQRQN8ugWHQCWaX7vUDs.ieUlxum8lOzOX48NG"
+    "id": 1708600000000,
+    "name": "Yash",
+    "department": "IT",
+    "salary": 50000
   }
 ]
