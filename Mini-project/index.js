@@ -1,27 +1,22 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import signupMidd from './src/Midd/SignupMidd.js';
-import userSignupService from './src/service/signupService.js';
-import { createUser } from './src/model/user.model.js';
-import { StatusCodes } from 'http-status-pro-js';
-dotenv.config();
-const app = express();
-const port = process.env.PORT
+import express from "express";
+import helmet from "helmet";
+import cors from "cors";
 
+import authRoutes from "./routes/auth.routes.js";
+import empRoutes from "./routes/employee.routes.js";
+
+const app = express();
+const PORT = 3000;
+
+app.use(cors());
+app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.set('view engine', 'ejs');
-app.get('/', (req, res) => {
-  res.render('index.ejs');
-});
+app.use(express.static("public"));
 
-app.get('/signup', (req, res) => {
-  res.render('signup.ejs');
-});
+app.set("view engine", "ejs");
 
-app.post('/signup', signupMidd, userSignupService);
-  
+app.use("/", empRoutes);
+app.use("/auth", authRoutes);
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}!`);
-});
+app.listen(PORT, () => console.log(`Server running http://localhost:${PORT}`));
