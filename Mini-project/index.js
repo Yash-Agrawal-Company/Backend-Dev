@@ -2,14 +2,15 @@ import express from "express";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import cors from "cors";
-
-import authRoutes from "./routes/auth.routes.js";
-import employeeRoutes from "./routes/employee.routes.js";
+import cookieParser from "cookie-parser";
+import authRoutes from "./src/routes/auth.routes.js";
+import employeeRoutes from "./src/routes/employee.routes.js";
 
 dotenv.config();
 
 const app = express();
 
+app.use(cookieParser());
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
@@ -22,7 +23,11 @@ app.use("/auth", authRoutes);
 app.use("/employees", employeeRoutes);
 
 app.get("/", (req, res) => {
-  res.redirect("/employees");
+   if(req.session.user){
+       res.redirect("/dashboard");
+   } else {
+       res.redirect("/auth/login");
+   }
 });
 
 const PORT = process.env.PORT || 3000;

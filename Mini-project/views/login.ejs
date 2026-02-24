@@ -7,7 +7,7 @@
 
 <h2>Login</h2>
 
-<form id="loginForm">
+<form id="loginForm" action="/auth/login" method="POST">
     <input type="email" name="email" placeholder="Email" required>
     <br><br>
 
@@ -16,7 +16,8 @@
 
     <button type="submit">Login</button>
 </form>
-
+<p>Don't have an account?</p>
+<a href="/auth/signup">Create New Account</a>
 <script>
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();

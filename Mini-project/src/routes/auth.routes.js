@@ -4,28 +4,58 @@ import { signupService, loginService } from "../services/auth.service.js";
 
 const router = express.Router();
 
-router.post("/signup", signupMidd, async (req, res) => {
-  const user = await signupService(req.body);
-
-  if (!user) return res.json({ message: "User exists" });
-
-  res.redirect("/auth/login");
+// ================== SIGNUP ==================
+router.get("/signup", (req, res) => {
+  res.render("signup");
 });
 
+router.post("/signup", signupMidd, async (req, res) => {
+  try {
+    const user = await signupService(req.body);
+
+    if (!user) {
+      return res.render("signup", { error: "User already exists" });
+    }
+
+    res.redirect("/auth/login");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Signup error");
+  }
+});
+
+// ================== LOGIN ==================
 router.get("/login", (req, res) => {
   res.render("login");
 });
 
 router.post("/login", async (req, res) => {
-  const token = await loginService(req.body.email, req.body.password);
+  try {
+    const { email, password } = req.body;
 
-  if (!token) return res.json({ message: "Invalid credentials" });
+    const token = await loginService(email, password);
 
-  res.json({ token });
+    if (!token) {
+      return res.render("login", { error: "Invalid email or password" });
+    }
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false, // localhost ke liye false, production me true
+      maxAge: 24 * 60 * 60 * 1000 // 1 day
+    });
+
+    res.redirect("/employees");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Login error");
+  }
 });
 
-router.get("/signup", (req, res) => {
-  res.render("signup");
+// ================== LOGOUT ==================
+router.get("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.redirect("/auth/login");
 });
 
 export default router;

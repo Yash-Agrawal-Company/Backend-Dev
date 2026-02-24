@@ -1,17 +1,16 @@
 import jwt from "jsonwebtoken";
 
 export default function authMiddleware(req, res, next) {
-  const token = req.headers.authorization?.split(" ")[1];
+  const token = req.cookies.token;
 
   if (!token) {
-    return res.status(401).json({ message: "No token provided" });
+    return res.redirect("/auth/login");
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    req.user = jwt.verify(token, process.env.JWT_SECRET);
     next();
   } catch (err) {
-    return res.status(401).json({ message: "Invalid token" });
+    return res.redirect("/auth/login");
   }
 }
