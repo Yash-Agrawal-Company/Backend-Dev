@@ -1,6 +1,24 @@
-<form method="POST">
-<input name="name" value="<%= emp.name %>">
-<input name="department" value="<%= emp.department %>">
-<input name="salary" value="<%= emp.salary %>">
-<button>Update</button>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Employee</title>
+</head>
+<body>
+
+<h2>Edit Employee</h2>
+
+<form action="/employees/edit/<%= employee.id %>" method="POST">
+    <input type="text" name="name" value="<%= employee.name %>" required>
+    <br><br>
+
+    <input type="text" name="department" value="<%= employee.department %>" required>
+    <br><br>
+
+    <input type="number" name="basicSalary" value="<%= employee.basicSalary %>" required>
+    <br><br>
+
+    <button type="submit">Update</button>
 </form>
+
+</body>
+</html>

@@ -1,28 +1,45 @@
-<h2>Employee Payroll System</h2>
-<a href="/add">Add Employee</a>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<h2>Employee Payroll Dashboard</h2>
+
+<a href="/employees/add">Add Employee</a>
 
 <table border="1">
 <tr>
-<th>Name</th>
-<th>Dept</th>
-<th>Salary</th>
-<th>Tax (12%)</th>
-<th>Net</th>
-<th>Action</th>
+    <th>Name</th>
+    <th>Department</th>
+    <th>Basic</th>
+    <th>Tax (12%)</th>
+    <th>Net Salary</th>
+    <th>Actions</th>
 </tr>
 
-<% employees.forEach(e => { %>
+<% employees.forEach(emp => { 
+    let tax = emp.basicSalary * 0.12;
+    let net = emp.basicSalary - tax;
+%>
+
 <tr>
-<td><%= e.name %></td>
-<td><%= e.department %></td>
-<td><%= e.salary %></td>
-<td><%= e.salary * 0.12 %></td>
-<td><%= e.salary - (e.salary * 0.12) %></td>
-<td>
-<a href="/edit/<%= e.id %>">Edit</a>
-<a href="/delete/<%= e.id %>">Delete</a>
-</td>
+    <td><%= emp.name %></td>
+    <td><%= emp.department %></td>
+    <td><%= emp.basicSalary %></td>
+    <td><%= tax.toFixed(2) %></td>
+    <td><%= net.toFixed(2) %></td>
+    <td>
+        <a href="/employees/edit/<%= emp.id %>">Edit</a> |
+        <a href="/employees/delete/<%= emp.id %>">Delete</a>
+    </td>
 </tr>
+
 <% }) %>
 
 </table>
+
+</body>
+</html>
