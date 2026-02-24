@@ -1,21 +1,23 @@
 import fs from "fs";
 
-export function createUser(user) {
-    let users = [];
+export function getAllUsers() {
+  return JSON.parse(fs.readFileSync("employees.json", "utf-8"));
+}
 
-    if (fs.existsSync("users.json")) {
-        users = JSON.parse(fs.readFileSync("users.json"));
-    }
+export function createUser(name, email, password) {
+  let users = getAllUsers();
 
-    users.push(user);
-    fs.writeFileSync("users.json", JSON.stringify(users, null, 2));
+  let exists = users.find(u => u.email === email);
+  if (exists) return null;
 
-    return user;
+  let user = { id: Date.now(), name, email, password };
+  users.push(user);
+
+  fs.writeFileSync("employees.json", JSON.stringify(users, null, 2));
+  return user;
 }
 
 export function findUserByEmail(email) {
-    if (!fs.existsSync("users.json")) return null;
-
-    const users = JSON.parse(fs.readFileSync("users.json"));
-    return users.find(u => u.email === email);
+  let users = getAllUsers();
+  return users.find(u => u.email === email);
 }

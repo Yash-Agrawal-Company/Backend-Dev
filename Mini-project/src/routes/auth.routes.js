@@ -4,19 +4,28 @@ import { signupService, loginService } from "../services/auth.service.js";
 
 const router = express.Router();
 
-router.get("/signup", (req, res) => res.render("signup"));
-router.get("/login", (req, res) => res.render("login"));
-
 router.post("/signup", signupMidd, async (req, res) => {
-    await signupService(req.body);
-    res.redirect("/login");
+  const user = await signupService(req.body);
+
+  if (!user) return res.json({ message: "User exists" });
+
+  res.redirect("/auth/login");
+});
+
+router.get("/login", (req, res) => {
+  res.render("login");
 });
 
 router.post("/login", async (req, res) => {
-    const user = await loginService(req.body.email, req.body.password);
-    if (!user) return res.send("Invalid Credentials");
+  const token = await loginService(req.body.email, req.body.password);
 
-    res.redirect("/");
+  if (!token) return res.json({ message: "Invalid credentials" });
+
+  res.json({ token });
+});
+
+router.get("/signup", (req, res) => {
+  res.render("signup");
 });
 
 export default router;
