@@ -2,7 +2,7 @@ import fs from 'fs';
 import express from 'express';
 import dotenv from 'dotenv';
 import createUser from './src/model/user_model.js';
-
+import bcrypt from 'bcrypt'
 dotenv.config()
 const app = express();
 
@@ -16,7 +16,9 @@ app.get('/', (req, res) => {
 
 app.post('/users', (req, res) => {
     const { name, email, password } = req.body;
-    createUser(name, email, password);
+    let salt = bcrypt.genSaltSync(10);
+    let hashPassword = bcrypt.hashSync(password, salt);
+    createUser(name, email, hashPassword);
     res.status(201).send('User created successfully');
 });
 

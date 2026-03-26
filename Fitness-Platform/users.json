@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Anuj",
+    "email": "anuj21@gmail.com",
+    "password": "122dd"
+  },
+  {
+    "name": "yash",
+    "email": "yash12122@gmail.com",
+    "password": "lhiui"
+  },
+  {
+    "name": "Devesh",
+    "email": "devesh@gmail.com",
+    "password": "$2b$10$GkTmNITDiel2OckTtMslD.v5lXrpqodTgBB7/ijlRweFyK0w9f9Vq"
+  },
+  {
+    "name": "Tarun",
+    "email": "tarunvarshney@gmail.com",
+    "password": "$2b$10$A0CHlEedZuLRg6jXcQVrUuQhRuG08Solv3pArRDet0iq58PEQlQFm"
+  }
+]
