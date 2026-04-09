@@ -1,21 +1,21 @@
-import express from 'express';
-import createUser from './src/model/user_model.js';
-
+import express from "express";
+import connectDB from "./src/config/db.js";
 
 const app = express();
+
+// middleware
 app.use(express.json());
 
+// connect database
+connectDB();
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
+// test route
+app.get("/", (req, res) => {
+  res.send("API is running...");
 });
 
-app.post('/signup', (req, res) => {
-  const { name, email, password } = req.body;
-  createUser(name, email, password);
-  res.send('User created successfully');
-});
+const PORT = 3000;
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
