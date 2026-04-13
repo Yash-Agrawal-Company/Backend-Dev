@@ -1,13 +1,24 @@
-import bcrypt from "bcrypt";
-const authMiddleware = (req, res, next) => {
-    const {password} = req.body;
-    if (!password || password.length < 6) {
-        return res.status(400).json({ message: "Password must be at least 6 characters" });
-    }else{
-        req.body.password = bcrypt.hashSync(password, 10);
-    }
-    next();
-}
+import jwt from "jsonwebtoken";
 
-  
+
+const authMiddleware = (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+      return res.status(401).json({ message: "No token" });
+    }
+    const token = authHeader.split(" ")[1];
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // ✅ FIX
+
+    req.user = decoded;
+
+    next();
+
+  } catch (error) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
+
 export default authMiddleware;
