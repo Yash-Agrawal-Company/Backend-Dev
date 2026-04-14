@@ -53,4 +53,19 @@ router.get("/test", async (req, res) => {
   res.send("Test route hit");
 });
 
+router.delete("/user/:id", async (req, res) => {
+  const { id } = req.params;
+
+  await User.findByIdAndUpdate(id, {
+    isDeleted: true
+  });
+
+  res.json({ message: "User soft deleted" });
+});
+
+router.get("/users", async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
+
 export default router;
