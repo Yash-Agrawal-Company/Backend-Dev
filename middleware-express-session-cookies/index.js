@@ -5,8 +5,12 @@ import activityTracker from "./src/middleware/activityTracker.js";
 import sanitizeMiddleware from "./src/middleware/sanitize.js";
 import session from "express-session";
 import multiStepRoutes from "./src/routes/multiStep.js";
+import cookieParser from "cookie-parser";
+import languageRoutes from "./src/routes/language.js";
 const app = express();
 
+app.use("/lang", languageRoutes);
+app.use(cookieParser());
 app.use(express.json());
 app.use(sanitizeMiddleware);
 app.use(session({
