@@ -4,7 +4,6 @@ import User from "../models/User.js";
 const router = express.Router();
 
 
-// ✅ Step 1
 router.post("/step1", (req, res) => {
   const { name } = req.body;
 
@@ -17,7 +16,6 @@ router.post("/step1", (req, res) => {
 });
 
 
-// ✅ Step 2
 router.post("/step2", (req, res) => {
   const { email } = req.body;
 
@@ -30,7 +28,6 @@ router.post("/step2", (req, res) => {
 });
 
 
-// ✅ Step 3
 router.post("/step3", (req, res) => {
   const { password } = req.body;
 
@@ -43,7 +40,6 @@ router.post("/step3", (req, res) => {
 });
 
 
-// ✅ Final Submit
 router.post("/submit", async (req, res) => {
   const data = req.session.userData;
 

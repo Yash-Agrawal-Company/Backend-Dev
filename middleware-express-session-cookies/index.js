@@ -7,6 +7,9 @@ import session from "express-session";
 import multiStepRoutes from "./src/routes/multiStep.js";
 import cookieParser from "cookie-parser";
 import languageRoutes from "./src/routes/language.js";
+import adminAuthRoutes from "./src/routes/adminAuth.js";
+import adminRoutes from "./src/routes/admin.js";
+
 const app = express();
 
 app.use("/lang", languageRoutes);
@@ -23,6 +26,8 @@ app.use(session({
 }));
 app.use("/multi", multiStepRoutes);
 
+app.use("/admin-auth", adminAuthRoutes);
+app.use("/admin", adminRoutes);
 
 mongoose.connect("mongodb://127.0.0.1:27017/activityDB")
   .then(() => console.log("MongoDB Connected"))

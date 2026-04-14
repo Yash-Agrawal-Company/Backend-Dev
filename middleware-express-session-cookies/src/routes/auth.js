@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-// ✅ Create user (for testing)
+
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -13,7 +13,7 @@ router.post("/register", async (req, res) => {
   res.json({ message: "User created", user });
 });
 
-// ✅ Login
+
 router.post("/login", async (req, res) => {
   const { email } = req.body;
 
@@ -29,7 +29,6 @@ router.post("/login", async (req, res) => {
   res.json({ message: "Login successful", user });
 });
 
-// ✅ Logout
 router.post("/logout", async (req, res) => {
   const { userId } = req.body;
 
@@ -42,7 +41,7 @@ router.post("/logout", async (req, res) => {
   res.json({ message: "Logout successful", user });
 });
 
-// ✅ Dummy route to test activity
+
 router.get("/test", async (req, res) => {
   const { userId } = req.query;
 
@@ -70,4 +69,17 @@ router.get("/users", async (req, res) => {
 
 export default router;
 
+export const isAuthenticated = (req, res, next) => {
+  if (!req.session.user) {
+    return res.status(401).json({ message: "Not logged in" });
+  }
+  next();
+};
+
+export const isAdmin = (req, res, next) => {
+  if (req.session.user.role !== "admin") {
+    return res.status(403).json({ message: "Access denied. Admin only." });
+  }
+  next();
+};
 //69de265b2a5fe384b6f3a4c9

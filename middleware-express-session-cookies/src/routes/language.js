@@ -3,7 +3,6 @@ import express from "express";
 const router = express.Router();
 
 
-// ✅ Set Language
 router.get("/set-lang/:lang", (req, res) => {
   const { lang } = req.params;
 
@@ -16,7 +15,6 @@ router.get("/set-lang/:lang", (req, res) => {
 });
 
 
-// ✅ Get Language
 router.get("/get-lang", (req, res) => {
   const lang = req.cookies.lang || "en";
 
