@@ -14,13 +14,27 @@ router.post("/login", async (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 
-
   req.session.user = {
     id: user._id,
     role: user.role
   };
 
-  res.json({ message: "Logged in", user: req.session.user });
+  if (req.cookies.cart) {
+    const cookieCart = JSON.parse(req.cookies.cart);
+
+    req.session.cart = [
+      ...(req.session.cart || []),
+      ...cookieCart
+    ];
+
+    res.clearCookie("cart"); // remove cookie cart
+  }
+
+  res.json({
+    message: "Logged in",
+    user: req.session.user,
+    cart: req.session.cart || []
+  });
 });
 
 

@@ -10,6 +10,7 @@ import languageRoutes from "./src/routes/language.js";
 import adminAuthRoutes from "./src/routes/adminAuth.js";
 import adminRoutes from "./src/routes/admin.js";
 import sessionTimeout from "./src/middleware/sessionTimeout.js";
+import cartRoutes from "./src/routes/cart.js";
 const app = express();
 
 app.use("/lang", languageRoutes);
@@ -39,6 +40,7 @@ app.use(session({
 }));
 
 app.use(sessionTimeout);
+app.use("/cart", cartRoutes);
 
 mongoose.connect("mongodb://127.0.0.1:27017/activityDB")
   .then(() => console.log("MongoDB Connected"))
