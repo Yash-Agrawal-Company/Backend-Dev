@@ -3,10 +3,22 @@ import mongoose from "mongoose";
 import authRoutes from "./src/routes/auth.js";
 import activityTracker from "./src/middleware/activityTracker.js";
 import sanitizeMiddleware from "./src/middleware/sanitize.js";
+import session from "express-session";
+import multiStepRoutes from "./src/routes/multiStep.js";
 const app = express();
 
 app.use(express.json());
 app.use(sanitizeMiddleware);
+app.use(session({
+  secret: "secretkey123",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 1000 * 60 * 30 // 30 minutes
+  }
+}));
+app.use("/multi", multiStepRoutes);
+
 
 mongoose.connect("mongodb://127.0.0.1:27017/activityDB")
   .then(() => console.log("MongoDB Connected"))
