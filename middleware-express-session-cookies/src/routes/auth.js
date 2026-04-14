@@ -1,24 +1,56 @@
 import express from "express";
-import jwt from "jsonwebtoken";
-import { setOTP } from "../utils/otpStore.js";
+import User from "../models/User.js";
 
 const router = express.Router();
 
-// login route (generate token + OTP)
-router.post("/login", (req, res) => {
+// ✅ Create user (for testing)
+router.post("/register", async (req, res) => {
+  const { name, email, password } = req.body;
+
+  const user = new User({ name, email, password });
+  await user.save();
+
+  res.json({ message: "User created", user });
+});
+
+// ✅ Login
+router.post("/login", async (req, res) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  user.loginAt = new Date();
+  await user.save();
+
+  res.json({ message: "Login successful", user });
+});
+
+// ✅ Logout
+router.post("/logout", async (req, res) => {
   const { userId } = req.body;
 
-  // create JWT
-  const token = jwt.sign({ userId }, "secretkey123");
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { logoutAt: new Date() },
+    { new: true }
+  );
 
-  // generate OTP
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  res.json({ message: "Logout successful", user });
+});
 
-  setOTP(userId, otp);
+// ✅ Dummy route to test activity
+router.get("/test", async (req, res) => {
+  const { userId } = req.query;
 
-  console.log("OTP:", otp); // simulate sending OTP
+  if (userId) {
+    await User.findByIdAndUpdate(userId, {});
+  }
 
-  res.json({ token, message: "OTP sent" });
+  res.send("Test route hit");
 });
 
 export default router;

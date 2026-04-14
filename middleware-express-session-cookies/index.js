@@ -1,19 +1,22 @@
 import express from "express";
-import requestLogger from "./src/middleware/logger.js";
-import mfaMiddleware from "./src/middleware/mfaMiddleware.js";
+import mongoose from "mongoose";
 import authRoutes from "./src/routes/auth.js";
+import activityTracker from "./src/middleware/activityTracker.js";
+
 const app = express();
+
 app.use(express.json());
-app.use(requestLogger);
-app.use("/auth", authRoutes);
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+// ✅ DB connection
+mongoose.connect("mongodb://127.0.0.1:27017/activityDB")
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
 
-app.post("/secure-action", mfaMiddleware, (req, res) => {
-  res.json({ message: "Secure action successful" });
-});
+// ✅ Middleware
+app.use(activityTracker);
+
+// ✅ Routes
+app.use("/", authRoutes);
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
