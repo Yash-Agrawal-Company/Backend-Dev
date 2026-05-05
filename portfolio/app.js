@@ -2,14 +2,14 @@ import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import cors from 'cors';
-import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import { notFound, errorHandler } from './src/middleware/errorMiddleware.js';
 
 // Route imports
-import authRoutes from './routes/authRoutes.js';
-import userRoutes from './routes/userRoutes.js';
-import portfolioRoutes from './routes/portfolioRoutes.js';
-import dashboardRoutes from './routes/dashboardRoutes.js';
-import transactionRoutes from './routes/transactionRoutes.js';
+import authRoutes from './src/routes/authRoutes.js';
+import userRoutes from './src/routes/userRoutes.js';
+import portfolioRoutes from './src/routes/portfolioRoutes.js';
+import dashboardRoutes from './src/routes/dashboardRoutes.js';
+import transactionRoutes from './src/routes/transactionRoutes.js';
 
 dotenv.config();
 

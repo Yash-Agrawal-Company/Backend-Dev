@@ -9,7 +9,7 @@ import {
 } from '../controllers/portfolioController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import { validate } from '../middleware/validationMiddleware.js';
-import { stockSchema, updateStockSchema } from '../validations/portfolioValidation.js';
+import { stockSchema, updateStockSchema } from '../validations/portfolioValidations.js';
 
 const router = express.Router();
 

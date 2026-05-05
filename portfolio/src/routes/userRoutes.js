@@ -2,7 +2,7 @@ import express from 'express';
 import { getUserProfile, updateUserProfile, changePassword } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import { validate } from '../middleware/validationMiddleware.js';
-import { updateProfileSchema, changePasswordSchema } from '../validations/authValidation.js';
+import { updateProfileSchema, changePasswordSchema } from '../validations/authValidations.js';
 
 const router = express.Router();
 
