@@ -1,19 +1,25 @@
-import express from "express";
-import auth from "../middleware/authMiddleware.js";
+import express from 'express';
 import {
   addStock,
-  sellStock,
-  getPortfolio,
+  getStocks,
+  updateStock,
   deleteStock,
-  dashboard
-} from "../controllers/portfolioController.js";
+  searchStocks,
+  filterStocks,
+} from '../controllers/portfolioController.js';
+import { protect } from '../middleware/authMiddleware.js';
+import { validate } from '../middleware/validationMiddleware.js';
+import { stockSchema, updateStockSchema } from '../validations/portfolioValidation.js';
 
 const router = express.Router();
 
-router.post("/", auth, addStock);
-router.get("/", auth, getPortfolio);
-router.post("/sell/:id", auth, sellStock);
-router.delete("/:id", auth, deleteStock);
-router.get("/dashboard", auth, dashboard);
+router.use(protect);
+
+router.post('/', validate(stockSchema), addStock);
+router.get('/', getStocks);
+router.get('/search', searchStocks);
+router.get('/filter', filterStocks);
+router.put('/:id', validate(updateStockSchema), updateStock);
+router.delete('/:id', deleteStock);
 
 export default router;
