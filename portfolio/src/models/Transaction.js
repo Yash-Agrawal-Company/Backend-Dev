@@ -1,14 +1,43 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const transactionSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    stockName: String,
-    type: { type: String, enum: ["BUY", "SELL"] },
-    quantity: Number,
-    price: Number
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    stockName: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      enum: ['BUY', 'SELL'],
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    totalAmount: {
+      type: Number,
+      required: true,
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-export default mongoose.model("Transaction", transactionSchema);
+const Transaction = mongoose.model('Transaction', transactionSchema);
+
+export default Transaction;
